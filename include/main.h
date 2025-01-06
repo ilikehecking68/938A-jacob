@@ -85,6 +85,8 @@ void opcontrol(void);
  * You can add C++-only headers here
  */
 //#include <iostream>
+using namespace pros;
+using namespace ez;
 #endif
 
 #endif  // _PROS_MAIN_H_
