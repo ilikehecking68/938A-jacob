@@ -22,8 +22,8 @@ using namespace ez;
 #define drive_wheel_diameter 2.75 /*drivetrain wheel diameter(should be same) in inches*/
 #define drive_rpm 600 /*wheel rpm*/
 
-#define arm_loading 19/*top loading position*/
-#define arm_loading2 29/*bottom loading position*/
+#define arm_loading_high 19/*top loading position*/
+#define arm_loading 29/*bottom loading position*/
 #define arm_noninterfere 0 /*lowest position(should be 0)*/
 #define arm_scoring 150 /*scoring position*/
 
@@ -38,7 +38,7 @@ inline pros::Rotation arm_sensor(4);
 inline PID arm_pid(2.5, 0, 0, 0, "Arm pid");
 
 
-ez::Drive chassis(
+inline ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
     {drive_left_ports},     // Left Chassis Ports (negative port will reverse it!)
     {drive_right_ports},  // Right Chassis Ports (negative port will reverse it!)
