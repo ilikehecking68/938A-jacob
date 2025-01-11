@@ -41,6 +41,9 @@ void arm_update(bool up_button_new_press, bool load_button_new_press, bool nonin
     if (arm_pid.exit_condition() != SMALL_EXIT){
         arm_motor.move(arm_pid.compute(get_arm_sensor_degrees()));
     }
+    if (arm_target == arm_scoring){
+      intake.move(22);
+    }
 }
 
 void intake_update(bool in_button_held, bool out_button_held){
@@ -59,6 +62,7 @@ void opcontrol() {
 
   chassis.drive_brake_set(driver_preference_brake);
   arm_pid.exit_condition_set(80, 2, 250, 8, 500, 500);
+  arm_pid.target_set(arm_noninterfere);
   while (true) {
     
     // PID Tuner
@@ -91,14 +95,14 @@ void opcontrol() {
     // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
     intake_update(master.get_digital(DIGITAL_R2), master.get_digital(DIGITAL_R1));
-    arm_update(master.get_digital(DIGITAL_B), master.get_digital_new_press(DIGITAL_RIGHT), master.get_digital_new_press(DIGITAL_DOWN));
+    //arm_update(master.get_digital(DIGITAL_B), master.get_digital_new_press(DIGITAL_RIGHT), master.get_digital_new_press(DIGITAL_DOWN));
     mogo_update(master.get_digital_new_press(DIGITAL_A));
     doinker_update(master.get_digital_new_press(DIGITAL_UP));
-    //arm_update(master.get_digital(DIGITAL_B), master.get_digital_new_press(DIGITAL_RIGHT), master.get_digital_new_press(DIGITAL_DOWN));
+    arm_update(master.get_digital(DIGITAL_B), master.get_digital_new_press(DIGITAL_RIGHT), master.get_digital_new_press(DIGITAL_DOWN));
     mogo_update(master.get_digital_new_press(DIGITAL_A));
     doinker_update(master.get_digital_new_press(DIGITAL_L1));
     pros::lcd::print(3, "%lf", (double)(arm_sensor.get_position() / 100));
-    
+    pros::lcd::print(4, "%lf", (double)(arm_target));
     // . . .
     // Put more user control code here!
     // . . .

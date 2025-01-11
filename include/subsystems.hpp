@@ -23,7 +23,7 @@ using namespace ez;
 #define drive_rpm 600 /*wheel rpm*/
 
 #define arm_loading_high 19/*top loading position*/
-#define arm_loading 29/*bottom loading position*/
+#define arm_loading 38/*bottom loading position*/
 #define arm_noninterfere 0 /*lowest position(should be 0)*/
 #define arm_scoring 150 /*scoring position*/
 
@@ -35,7 +35,7 @@ inline pros::ADIDigitalOut mogo_clamp(4, false);
 inline pros::ADIDigitalOut doinker(1, false);
 inline pros::Motor arm_motor(-16, pros::MotorGears::green, pros::MotorEncoderUnits::degrees);
 inline pros::Rotation arm_sensor(4);
-inline PID arm_pid(2.5, 0, 0, 0, "Arm pid");
+inline PID arm_pid(3.75, 0, 0, 0, "Arm pid");
 
 
 inline ez::Drive chassis(
