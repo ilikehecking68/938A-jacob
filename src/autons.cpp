@@ -206,19 +206,33 @@ void auton_skills() {
 void red_solo_awp(){
   
   mogo.set_value(true);
-  chassis.pid_drive_set(-35_in, 127);
+  chassis.pid_drive_set(-40_in, 70);
   chassis.pid_wait();
   mogo.set_value(false);
   intake.move(-127);
-  //intake.move(-127);
+  //intake.move(-127);#include "main.h"
   pros::delay(500);
+  intake.move(0);
   mogo.set_value(true);
-  chassis.pid_turn_set(120,127);
+  intake.move(-70);
+  chassis.pid_turn_set(35,127);
+  chassis.pid_wait();
+  chassis.pid_drive_set(40_in,127);
+  chassis.pid_wait();
+  pros::delay(30);
+  intake.move(0);
+  chassis.pid_turn_set(2,127);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-25_in,127);
+  chassis.pid_wait();
+  mogo.set_value(false);
+  intake.move(-127);
   //chassis.pid_turn_set(90_deg, 110);
   //chassis.pid_wait();
   //chassis.pid_drive_set(20_in, 127);
   //chassis.pid_wait();
-}
+  }
+
 
 void autonomous() {
   chassis.pid_targets_reset();                // Resets PID targets to 0
@@ -230,6 +244,7 @@ void autonomous() {
   red_solo_awp();
   //ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }
+
 
 ///
 // Auton selector
