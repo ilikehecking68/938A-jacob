@@ -15,7 +15,7 @@
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-  //arm_sensor.reverse();
+  arm_sensor.reverse();
   arm_sensor.reset_position();
   // Print our branding over your terminal :D
   ez::ez_template_print();

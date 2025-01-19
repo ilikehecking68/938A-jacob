@@ -204,35 +204,215 @@ void auton_skills() {
 
 
 void red_solo_awp(){
-  
+  /*
   mogo.set_value(true);
-  chassis.pid_drive_set(-40_in, 70);
+
+  chassis.pid_drive_set(-32.5_in, 55);
   chassis.pid_wait();
+
   mogo.set_value(false);
   intake.move(-127);
   //intake.move(-127);#include "main.h"
   pros::delay(500);
-  intake.move(0);
-  mogo.set_value(true);
-  intake.move(-70);
-  chassis.pid_turn_set(35,127);
+
+
+/* chassis.pid_turn_set(-90, 110);
   chassis.pid_wait();
+
+  chassis.pid_drive_set(25, 100);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-25, 120);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(0, 110);
+  chassis.pid_wait();*/
+  
+/*
+  intake.move(0);
+
+  mogo.set_value(true);
+
+  intake.move(-70);
+
+  chassis.pid_turn_set(55 + 180, 127);
+  chassis.pid_wait();
+
   chassis.pid_drive_set(40_in,127);
   chassis.pid_wait();
-  pros::delay(30);
+
   intake.move(0);
-  chassis.pid_turn_set(2,127);
+
+  chassis.pid_turn_set(-25 + 180,127);
   chassis.pid_wait();
-  chassis.pid_drive_set(-25_in,127);
+
+  chassis.pid_drive_set(-35_in,127);
   chassis.pid_wait();
-  mogo.set_value(false);
+
+
+  //mogo.set_value(false);
+  pros::delay(400);
+  /*
   intake.move(-127);
+
+  chassis.pid_turn_set(110 + 180,127);
+  chassis.pid_wait();
+  chassis.pid_drive_set(20_in,127);
+  chassis.pid_wait();
+  chassis.pid_turn_set(25 + 180,127);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-40_in,70);
+  chassis.pid_wait();*/
   //chassis.pid_turn_set(90_deg, 110);
   //chassis.pid_wait();
   //chassis.pid_drive_set(20_in, 127);
-  //chassis.pid_wait();
+  //chassis.pid_wait();*/
+  
+/*
+  chassis.pid_drive_set(-16,65);
+  chassis.pid_wait();
+
+  mogo.set_value(false);
+
+  intake.move(-127);
+
+  chassis.pid_turn_set(-97, 120);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(18, 80);
+  chassis.pid_wait();*/
+
+ /* mogo.set_value(true);
+
+  chassis.pid_drive_set(-25, 70);
+  chassis.pid_wait();
+
+
+  mogo.set_value(false);
+
+  pros::delay(300);
+
+  chassis.pid_turn_set(95, 120);
+  chassis.pid_wait();
+
+  intake.move(-127);
+
+  chassis.pid_drive_set(18, 110);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(30, 127);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(45, 127);
+  chassis.pid_wait();*/
+
+ /* mogo.set_value(true);
+
+  chassis.pid_drive_set(-40, 127);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(90, 127);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-15, 127);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(0, 127);
+  chassis.pid_wait();
+
+  mogo.set_value(false);
+
+  intake.move(-127)*/
+/*
+  chassis.pid_drive_set(-3, 100);
+  chassis.pid_wait();
+
+  mogo.set_value(false);
+
+  intake.move(-127);
+
+  chassis.drive_set(7, 125);
+  chassis.pid_wait();
+
+  mogo.set_value(true);
+
+  chassis.drive_set(-7, 125);
+  chassis.pid_wait();
+
+  chassis.drive_set(7, 125);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(-20, 80);
+  chassis.pid_wait();
+
+  chassis.pid_swing_set(LEFT_SWING, 90, 127, 0);
+  chassis.pid_wait();
+
+  intake.move(-127);
+
+  chassis.pid_turn_set(20, 127);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(45, 80);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(65, 120);
+  chassis.pid_wait();
+  
+  chassis.pid_drive_set(100, 120);
+  chassis.pid_wait();*/
+
+  mogo.set_value(true);
+
+  chassis.pid_drive_set(-35, 127);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(25, 90);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-10, 80);
+
+  mogo.set_value(false);
+
+  intake.move(-127);
+
+
   }
 
+#define pw chassis.pid_wait
+#define pds chassis.pid_drive_set
+#define pts chassis.pid_turn_set
+void safe_wp(){
+    mogo.set_value(true);
+
+    arm_motor.move(100);
+    pros::delay(1111);
+    //arm_motor.move(-97);
+    //arm_sensor.reset_position();
+    pds(-4, 127);
+    arm_motor.move(-100);
+    pw();
+
+    pts(-39, 127);
+    pw();
+
+    pds(-39, 100);
+    pw();
+    mogo.set_value(false);
+    pros::delay(222);
+    pts(-146, 120);
+    pw();
+    intake.move(-127);
+    pds(22, 127);
+    pw();
+    pros::delay(22);
+    pts(-90, 127);
+    pw();
+    pds(44, 127);
+    pw();
+    intake.move(0);
+    arm_sensor.reset_position();
+}
 
 void autonomous() {
   chassis.pid_targets_reset();                // Resets PID targets to 0
@@ -241,9 +421,11 @@ void autonomous() {
   chassis.drive_brake_set(MOTOR_BRAKE_HOLD);  // Set motors to hold.  This helps autonomous consistency
 
   //red_left();
-  red_solo_awp();
+  //red_solo_awp();
+  safe_wp();
   //ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }
+
 
 
 ///

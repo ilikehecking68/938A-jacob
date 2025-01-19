@@ -58,6 +58,7 @@ void intake_update(bool in_button_held, bool out_button_held){
 
 void opcontrol() {
   // This is preference to what you like to drive on
+  arm_sensor.reset_position();
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_COAST;
 
   chassis.drive_brake_set(driver_preference_brake);
@@ -99,8 +100,8 @@ void opcontrol() {
     mogo_update(master.get_digital_new_press(DIGITAL_A));
     doinker_update(master.get_digital_new_press(DIGITAL_UP));
     arm_update(master.get_digital(DIGITAL_B), master.get_digital_new_press(DIGITAL_RIGHT), master.get_digital_new_press(DIGITAL_DOWN));
-    mogo_update(master.get_digital_new_press(DIGITAL_A));
-    doinker_update(master.get_digital_new_press(DIGITAL_L1));
+    //mogo_update(master.get_digital_new_press(DIGITAL_A));
+    //doinker_update(master.get_digital_new_press(DIGITAL_L1));
     pros::lcd::print(3, "%lf", (double)(arm_sensor.get_position() / 100));
     pros::lcd::print(4, "%lf", (double)(arm_target));
     // . . .
