@@ -414,6 +414,127 @@ void safe_wp(){
     arm_sensor.reset_position();
 }
 
+void blue_four_ring() {
+    mogo.set_value(true);
+
+    pds(50, 127);
+    pw();
+    // doinker out
+    intake.move(-127);
+    pros::delay(800);
+    intake.move(0);
+
+    pds(-10, 127);
+    pw();
+
+    pts(55, 127);
+    pw();
+    // doinker in
+
+    pds(-20, 127);
+    pw();
+
+    mogo.set_value(false);
+    intake.move(-127);
+
+    pts(75, 127);
+    pw();
+
+    pds(20, 127);
+    pw();
+    intake.move(0);
+
+    pts(180, 127);
+    pw();
+    intake.move(-127);
+
+    pds(40, 127);
+    pw();
+}
+void red_goal_rush_wp() {
+    mogo.set_value(true);
+
+    pds(50.75, 127);
+    pw();
+
+    arm_motor.move(100);
+    pros::delay(800);
+    pds(-30, 127);
+    pw();
+    arm_motor.move(-100);
+
+    pts(120, 127);
+    pw();
+
+    pds(-16, 127);
+    pw();
+
+    mogo.set_value(false);
+    intake.move(-127);
+    pros::delay(500);
+
+    pts(42, 127);
+    pw();
+
+    pds(30, 127);
+    pw();
+
+    pts(200, 127);
+    pw();
+
+    pds(50, 127);
+    pw();
+
+    //doinker out
+}
+
+//! UNFINISHED
+//TODO: FINISH
+void auton_skills() {
+  mogo.set_value(true);
+
+  //score on alliance stake
+  intake.move(-127);
+  pros::delay(500);
+  intake.move(127);
+
+  chassis.pid_drive_set(10, 127);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(-100, 127);
+  chassis.pid_wait();
+
+  intake.move(-127);
+
+  chassis.pid_drive_set(-25, 127);
+  chassis.pid_wait();
+
+  //grab first mogo
+  mogo.set_value(false);
+  pros::delay(100);
+
+  chassis.pid_turn_set(26, 127);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(80, 127);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(140, 120);
+  chassis.pid_wait();
+
+  arm_pid.target_set(arm_loading);
+
+  chassis.pid_drive_set(13, 120);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(45, 120);
+  chassis.pid_wait();
+
+  arm_pid.target_set(arm_scoring);
+  pros::delay(100);
+  arm_pid.target_set(arm_noninterfere);
+}
+
 void autonomous() {
   chassis.pid_targets_reset();                // Resets PID targets to 0
   chassis.drive_imu_reset();                  // Reset gyro position to 0
