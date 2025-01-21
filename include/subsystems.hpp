@@ -38,8 +38,8 @@ inline pros::Rotation arm_sensor(4);
 inline PID arm_pid(3.75, 0, 10, 0, "Arm pid");
 
 
-inline pros::MotorGroup LEFT({drive_left_ports});
-inline pros::MotorGroup RIGHT({drive_right_ports});
+inline pros::MotorGroup LEFT({drive_left_ports}, MotorGears::blue, MotorUnits::degrees);
+inline pros::MotorGroup RIGHT({drive_right_ports}, MotorGears::blue, MotorUnits::degrees);
 inline ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
     {drive_left_ports},     // Left Chassis Ports (negative port will reverse it!)
