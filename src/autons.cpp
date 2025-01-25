@@ -1,4 +1,5 @@
 #include "main.h"
+#include "colorsort.hpp"
 
 /////
 // For installation, upgrading, documentations, and tutorials, check out our website!
@@ -14,14 +15,21 @@ const int SWING_SPEED = 127;
 // Constants
 ///
 void set_pid_constants() {
+  // chassis.pid_heading_constants_set(11, 0, 20);
+  // chassis.pid_drive_constants_set(20, 0, 100);
+  // chassis.pid_turn_constants_set(3, 0.05, 20, 15);
+  // chassis.pid_swing_constants_set(6, 0, 65);
   chassis.pid_heading_constants_set(11, 0, 20);
-  chassis.pid_drive_constants_set(6, 0, 200);
-  chassis.pid_turn_constants_set(4, 0.05, 25, 15);
+  chassis.pid_drive_constants_set(20, 0, 100);
+  chassis.pid_turn_constants_set(3, 0.05, 20, 15);
   chassis.pid_swing_constants_set(6, 0, 65);
 
-  chassis.pid_turn_exit_condition_set(80_ms, 3_deg, 250_ms, 7_deg, 500_ms, 500_ms);
+  // chassis.pid_turn_exit_condition_set(80_ms, 3_deg, 250_ms, 7_deg, 500_ms, 500_ms);
+  // chassis.pid_swing_exit_condition_set(80_ms, 3_deg, 250_ms, 7_deg, 500_ms, 500_ms);
+  // chassis.pid_drive_exit_condition_set(80_ms, 1_in, 250_ms, 3_in, 500_ms, 500_ms);
+  chassis.pid_turn_exit_condition_set(1_ms, 4_deg, 500_ms, 7_deg, 750_ms, 750_ms);
   chassis.pid_swing_exit_condition_set(80_ms, 3_deg, 250_ms, 7_deg, 500_ms, 500_ms);
-  chassis.pid_drive_exit_condition_set(80_ms, 1_in, 250_ms, 3_in, 500_ms, 500_ms);
+  chassis.pid_drive_exit_condition_set(1_ms, 1_in, 500_ms, 3_in, 750_ms, 750_ms);
 
   chassis.pid_turn_chain_constant_set(3_deg);
   chassis.pid_swing_chain_constant_set(5_deg);
@@ -132,8 +140,9 @@ void red_right() {
 #define pw chassis.pid_wait
 #define pds chassis.pid_drive_set
 #define pts chassis.pid_turn_set
-void safe_wp(){
-   mogo.set_value(true);
+void red_safe_wp(){
+    //USE THIS AUTO
+    mogo.set_value(true);
 
     arm_motor.move(100);
     pros::delay(1420);
@@ -142,12 +151,76 @@ void safe_wp(){
     arm_motor.move(-32);
     pds(-10, 127);
     pw();
-    pts(-51, 127);
+    pts(45, 127);
+    pw();
+    pds(9, 127);
+    pw();
+    doinker.set_value(true);
+    pds(-11, 127);
+    pw();
+    pts(11, 127);
+    pw();
+    pds(-8, 127);
+    pw();
+    doinker.set_value(false);
+    intake.move(-127);
+    chassis.pid_swing_set(LEFT_SWING, 27, 120, 65);
+    pw();
+    pros::delay(500);
+    //chassis.pid_swing_set(LEFT_SWING, -98, 60, 22);
+    //pw();
+    chassis.pid_swing_set(LEFT_SWING, -98, 60, 18.6);
+    pw();
+
+    pds(-20, 70);
+    pw();
+    pros::delay(200);
+    mogo.set_value(false);
+    pros::delay(300);
+    chassis.pid_swing_set(RIGHT_SWING, -230, 120, 32);
+    pw();
+
+    pros::delay(50);
+    pts(-260, 70);
+    pw();
+    doinker.set_value(true);
+    pros::delay(100);
+    intake.move(0);
+    pds(16, 60);
+    pw();
+    pts(0, 100);
+    pw();
+    intake.move(-127);
+    pds(20, 100);
+    pw();
+    pts(90, 80);
+    pw();
+    pds(40, 90);
+    pw();
+    /*pds(-16, 60);
+    pw();
+    doinker.set_value(false);
+    pds(10, 70);
+    pw();
+
+    pts(-120, 100);
+    pw();
+    pds(-53, 80);
+    pw();
+    intake.move(-127);*/
+
+
+    /*pts(-51, 127);
     pw();
     arm_motor.move(-100);
-    pds(-42, 100);
+    pts(30, 127);
+    pw();
+    doinker.set_value(true);
+
+    pds(-39.82, 100);
     pw();
     arm_motor.move(0);
+    delay(333);
     mogo.set_value(false);
     pros::delay(222);
     pts(-157, 120);
@@ -156,17 +229,88 @@ void safe_wp(){
     pds(24, 127);
     pw();
     pros::delay(22);
-    pts(-73, 127);
+    /*pts(-73, 127);
     pw();
-    pds(27, 127);
+    pds(41, 127);
     pw();
-    intake.move(0);
+    pts(-110, 127);
+    pw();
+    doinker.set_value(true);
+    pts(-126, 127);
+    pw();
+    delay(690);
+    pts(-95, 127);
+    pw();
+    doinker.set_value(false);    
+    pds(12, 127);
+    pw();*/
+    
+    /*intake.move(0);
     mogo.set_value(true);
     pts(-127, 130);
     pw();
     pds(-1000, 127);
     pw();
-    arm_sensor.reset_position();
+    arm_sensor.reset_position();*/
+}
+
+void blue_safe_wp(){
+    //USE THIS AUTO
+    mogo.set_value(true);
+
+    arm_motor.move(100);
+    pros::delay(800);
+    //arm_motor.move(-97);
+    //arm_sensor.reset_position();
+    arm_motor.move(-40);
+    pros::delay(100);
+    pds(-10, 127);
+    pw();
+    pts(-65, 127);
+    pw();
+    pds(9, 127);
+    pw();
+    doinker.set_value(true);
+    pros::delay(500);
+    pds(-11, 127);
+    pw();
+    pts(-30, 127);
+    pw();
+    doinker.set_value(false);
+    intake.move(-127);
+    pds(15, 127);
+    pw();
+    pds(-20, 127);
+    pw();
+    pts(120, 127);
+    pw();
+    //chassis.pid_swing_set(LEFT_SWING, -98, 60, 22);
+    //pw();
+    pds(-20, 70);
+    pw();
+    pros::delay(200);
+    mogo.set_value(false);
+    pros::delay(300);
+    chassis.pid_swing_set(LEFT_SWING, -230, 120, 32);
+    pw();
+
+    pros::delay(50);
+    pts(260, 70);
+    pw();
+    doinker.set_value(true);
+    pros::delay(100);
+    intake.move(0);
+    pds(16, 60);
+    pw();
+    pts(0, 100);
+    pw();
+    intake.move(-127);
+    pds(20, 100);
+    pw();
+    pts(-90, 80);
+    pw();
+    pds(40, 90);
+    pw();
 }
 
 void blue_four_ring() {
@@ -206,6 +350,45 @@ void blue_four_ring() {
     pds(40, 127);
     pw();
 }
+
+void red_four_ring() {
+    mogo.set_value(true);
+
+    pds(50, 127);
+    pw();
+    // doinker out
+    intake.move(-127);
+    pros::delay(800);
+    intake.move(0);
+
+    pds(-10, 127);
+    pw();
+
+    pts(-55, 127);
+    pw();
+    // doinker in
+
+    pds(-20, 127);
+    pw();
+
+    mogo.set_value(false);
+    intake.move(-127);
+
+    pts(-75, 127);
+    pw();
+
+    pds(20, 127);
+    pw();
+    intake.move(0);
+
+    pts(-180, 127);
+    pw();
+    intake.move(-127);
+
+    pds(40, 127);
+    pw();
+}
+
 void red_goal_rush_wp() {
     mogo.set_value(true);
 
@@ -298,7 +481,7 @@ void autonomous() {
 
   //red_left();
   //red_solo_awp();
-  safe_wp();
+  blue_safe_wp();
   //ez::as::auton_selector.selected_auton_call();  // Calls selected auton from autonomous selector
 }
 

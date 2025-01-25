@@ -32,11 +32,12 @@ using namespace ez;
 #define mogo mogo_clamp
 inline pros::Motor intake(1, pros::MotorGears::blue, pros::MotorEncoderUnits::degrees);
 inline pros::ADIDigitalOut mogo_clamp(4, false);
-inline pros::ADIDigitalOut doinker(1, false);
+inline pros::ADIDigitalOut doinker('H', false);
 inline pros::Motor arm_motor(-16, pros::MotorGears::green, pros::MotorEncoderUnits::degrees);
 inline pros::Rotation arm_sensor(4);
 inline PID arm_pid(3.75, 0, 10, 0, "Arm pid");
-
+inline Optical optical(10);
+#define COLOR_SORT_THRESHOLD 50
 
 inline pros::MotorGroup LEFT({drive_left_ports}, MotorGears::blue, MotorUnits::degrees);
 inline pros::MotorGroup RIGHT({drive_right_ports}, MotorGears::blue, MotorUnits::degrees);
