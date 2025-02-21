@@ -14,6 +14,7 @@
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
+
 void initialize() {
   arm_sensor.reverse();
   arm_sensor.reset_position();

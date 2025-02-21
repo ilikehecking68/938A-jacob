@@ -1,7 +1,7 @@
 #include "main.h"
 
 bool doinker_status = false;
-bool prev_doinker_status = false;
+bool prev_doinker_status = true;
 bool mogo_status = false;
 
 void doinker_update(bool button_new_press){
@@ -42,7 +42,7 @@ void arm_update(bool up_button_new_press, bool load_button_new_press, bool nonin
         arm_motor.move(arm_pid.compute(get_arm_sensor_degrees()));
     }
     if (arm_target == arm_scoring){
-      intake.move(22);
+      intake_upper.move(22);
     }
 }
 
@@ -58,6 +58,10 @@ void intake_update(bool in_button_held, bool out_button_held){
 
 void opcontrol() {
   // This is preference to what you like to drive on
+  //arm_sensor.reset_position();
+  arm_motor.move(-37);
+  pros::delay(700);
+  arm_motor.move(0);
   arm_sensor.reset_position();
   pros::motor_brake_mode_e_t driver_preference_brake = MOTOR_BRAKE_COAST;
 
