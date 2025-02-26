@@ -16,17 +16,17 @@ disk_color get_disk_color(){
 
 void color_sort_update(){
     if (get_disk_color() != allowed_color){
-        arm_pid.target_set(arm_scoring);
+        intake.move(0);
     }
 }
-
-void color_sort_loop_task_fn(){
-    while (true){
-        color_sort_update();
-        delay(20);
-    }
-}
-
 
 //enable later if needed:
-//  Task color_sort_task(color_sort_loop_task_fn, "Color Sort Task");
+Task color_sort_task([]{
+    pros::Mutex mut;
+    while (true){
+        mut.take();
+        color_sort_update();
+        mut.give();
+        delay(20);
+    }
+});
